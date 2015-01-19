@@ -4,22 +4,19 @@ Support for using Reform with the Haskell Web Framework Happstack. <http://happs
 -}
 module Text.Reform.Happstack where
 
-import Control.Applicative                 (Applicative((<*>)), Alternative, (<$>), (<|>), (*>), optional)
-import Control.Applicative.Indexed         (IndexedApplicative(..))
+import Control.Applicative                 (Alternative, (<$>), optional)
 import Control.Monad                       (msum, mplus)
 import Control.Monad.Trans                 (liftIO)
-import Data.ByteString.Lazy                (ByteString)
 import qualified Data.ByteString.Lazy.UTF8 as UTF8
-import Data.Either                         (lefts, rights)
-import Data.Maybe                          (mapMaybe)
+import Data.Either                         (rights)
 import Data.Monoid                         (Monoid)
 import Data.Text.Lazy                      (Text)
 import qualified Data.Text.Lazy            as TL
 import System.Random                       (randomIO)
 import Text.Reform.Backend              (FormInput(..), FileType, CommonFormError(NoFileFound, MultiFilesFound), commonFormError)
-import Text.Reform.Core                 (Environment(..), Form, Proved(..), Value(..), View(..), (++>), eitherForm, runForm, mapView, viewForm)
+import Text.Reform.Core                 (Environment(..), Form, Proved(..), Value(..), View(..), eitherForm, runForm, viewForm)
 import Text.Reform.Result               (Result(..), FormRange)
-import Happstack.Server                 (Cookie(..), CookieLife(Session), ContentType, Happstack, Input(..), Method(GET, HEAD, POST), ServerMonad(localRq), ToMessage(..), Request(rqMethod), addCookie, askRq, expireCookie, forbidden, lookCookie, lookInputs, lookText, body, escape, method, mkCookie, getDataFn)
+import Happstack.Server                 (Cookie(..), CookieLife(Session), ContentType, Happstack, Input(..), Method(GET, HEAD, POST), ServerMonad(localRq), ToMessage(..), Request(rqMethod), addCookie, askRq, forbidden, lookCookie, lookInputs, lookText, escape, method, mkCookie, getDataFn)
 
 -- FIXME: we should really look at Content Type and check for non-UTF-8 encodings
 instance FormInput [Input] where
